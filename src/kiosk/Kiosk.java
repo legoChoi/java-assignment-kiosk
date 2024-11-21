@@ -76,7 +76,7 @@ public class Kiosk {
         MenuItem menuItem;
 
         while (menu.getState()) {
-            menu.show();
+            consoleOutput.print(menu.show());
             try {
                 commandInput = consoleInput.getIntInput();
 
@@ -92,7 +92,7 @@ public class Kiosk {
                 menuItem = menuItemList.get(commandInput - 1);
 
                 consoleOutput.print(String.format(
-                        "선택한 메뉴: %s | W %f | %s",
+                        "선택한 메뉴: %s | W %.1f | %s",
                         menuItem.getName(),
                         menuItem.getPrice(),
                         menuItem.getDescription()

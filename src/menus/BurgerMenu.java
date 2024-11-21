@@ -2,7 +2,6 @@ package menus;
 
 import menuItems.BurgerMenuItem;
 import menuItems.MenuItem;
-import shared.io.output.Output;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BurgerMenu implements Menu {
     private final List<MenuItem> burgerMenuItemList;
-    private final Output consoleOutput;
     private final String NAME = "Burgers";
     private boolean state = true;
 
-    public BurgerMenu(Output consoleOutput) {
+    public BurgerMenu() {
         this.burgerMenuItemList = new ArrayList<>();
-        this.consoleOutput = consoleOutput;
 
         burgerMenuItemList.add(new BurgerMenuItem(
                 "ShackBurger",
@@ -29,7 +26,7 @@ public class BurgerMenu implements Menu {
                 "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"
         ));
         burgerMenuItemList.add(new BurgerMenuItem(
-                "cheeseburger",
+                "Cheeseburger",
                 6.9,
                 "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"
         ));
@@ -51,20 +48,24 @@ public class BurgerMenu implements Menu {
     }
 
     @Override
-    public void show() {
+    public String show() {
+        StringBuilder result = new StringBuilder();
+
         // 스트림안에서 인덱스를 사용하기위해 AtomicInteger 사용
         AtomicInteger idx = new AtomicInteger(1);
 
-        consoleOutput.print("\n[ BURGER MENU ]");
+        result.append("\n[ BURGERS MENU ]\n");
         burgerMenuItemList
-                .forEach(item -> consoleOutput.print(
-                        String.format("%d. %-15s| W %.1f | %s",
+                .forEach(item -> result.append(
+                        String.format("%d. %-15s| W %.1f | %s\n",
                                 idx.getAndIncrement(),
                                 item.getName(),
                                 item.getPrice(),
                                 item.getDescription())
                 ));
-        consoleOutput.print("0. 뒤로가기");
+        result.append("0. 뒤로가기");
+
+        return result.toString();
     }
 
     @Override

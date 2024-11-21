@@ -5,7 +5,7 @@ import menuItems.MenuItem;
 import java.util.List;
 
 public interface Menu {
-    void show();
+    String show();
     List<MenuItem> getList();
     boolean getState();
     void setState(boolean state);
