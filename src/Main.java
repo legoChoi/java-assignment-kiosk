@@ -12,17 +12,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Input consoleInput = new ConsoleInput(scanner);
-        Output consoleOutput = new ConsoleOutput();
-
-        Menu burgerMenu = new BurgerMenu(consoleOutput);
-        Menu beverageMenu = new BeverageMenu(consoleOutput);
 
         new Kiosk(
-                consoleInput,
-                consoleOutput,
-                burgerMenu,
-                beverageMenu
+                new ConsoleInput(scanner),
+                new ConsoleOutput(),
+                new BurgerMenu(),
+                new BeverageMenu()
         );
 
         scanner.close();
