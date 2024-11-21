@@ -98,7 +98,7 @@ public class Kiosk {
                         menuItem.getDescription()
                 ));
 
-
+                menu.setState(false);
             } catch (NotValidInputException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput(); // 개행 문자 처리
