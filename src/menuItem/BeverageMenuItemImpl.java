@@ -18,6 +18,7 @@ public class BeverageMenuItemImpl implements MenuItem {
 
     @Override
     public double getPrice() {
+
         return price;
     }
 

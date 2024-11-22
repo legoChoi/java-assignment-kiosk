@@ -4,15 +4,15 @@ import menuItem.MenuItem;
 import shared.exceptions.exceptions.OrderListEmptyException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class OrderImpl implements Order {
     private final List<List<MenuItem>> orderList;
+    private final List<Double> priceList;
 
     public OrderImpl() {
         this.orderList = new ArrayList<>();
+        this.priceList = new ArrayList<>();
     }
 
     @Override
@@ -21,15 +21,22 @@ public class OrderImpl implements Order {
     }
 
     @Override
-    public void addCartToOrderList(List<MenuItem> menuList) {
+    public double addCartToOrderList(List<MenuItem> menuList, int ratio) {
         this.orderList.add(
                 List.copyOf(menuList)
         );
+
+        double sumPrice = menuList.stream().mapToDouble(MenuItem::getPrice).sum();
+        double discount = sumPrice * (double) ratio / 100;
+        this.priceList.add(sumPrice - discount);
+
+        return sumPrice - discount;
     }
 
     @Override
     public void remove(int commandInput) {
         orderList.remove(commandInput);
+        priceList.remove(commandInput);
     }
 
     @Override
@@ -38,39 +45,35 @@ public class OrderImpl implements Order {
             throw new OrderListEmptyException();
         }
         StringBuilder result = new StringBuilder();
-        result.append("\n아래와 같이 주문 하시겠습니까?\n");
         result.append("\n[ Orders ]\n");
 
         int orderIndex = 1;
-        int menuIndex;
+        int pos = 0;
 
         for (List<MenuItem> order : this.orderList) {
-            menuIndex = 1;
 
             result.append(String.format(
-                    "\n%d. {",
+                    "%d.",
                     orderIndex++
             ));
 
             for (MenuItem menu : order) {
                 result.append(
                         String.format(
-                                "\n\t%d. %-15s | W %.1f | %s",
-                                menuIndex++,
+                                "\n%-15s | W %.1f | %s",
                                 menu.getName(),
                                 menu.getPrice(),
                                 menu.getDescription())
                 );
             }
-            result.append("\n\n\t[Total]");
+            result.append("\n\n[Total]");
             result.append(String.format(
-                    "\n\tW %.1f",
-                    order.stream().mapToDouble(MenuItem::getPrice).sum()
+                    "\nW %.1f\n\n",
+                    this.priceList.get(pos++)
             ));
-            result.append("\n}\n");
         }
 
-        result.append("\n제거하려는 주문을 선택해 주세요.\n");
+        result.append("제거하려는 주문을 선택해 주세요.\n");
         result.append("0. 종료");
 
         return result.toString();
