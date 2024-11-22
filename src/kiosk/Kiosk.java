@@ -1,10 +1,10 @@
 package kiosk;
 
 import cart.Cart;
+import grade.Grade;
 import menuItem.MenuItem;
 import menu.Menu;
 import order.Order;
-import shared.exceptions.exceptionMessages.ExceptionMessages;
 import shared.exceptions.exceptions.CartEmptyException;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.exceptions.exceptions.OrderListEmptyException;
@@ -174,7 +174,8 @@ public class Kiosk {
                 commandInput = consoleInput.getIntInput();
 
                 if (commandInput == 1) {
-                    cart.add(menuItem);
+                    cart.addToCart(menuItem);
+                    consoleOutput.print(menuItem.getName() + "이 장바구니에 추가되었습니다.");
                     break;
                 }
                 else if (commandInput == 2) {
@@ -199,39 +200,72 @@ public class Kiosk {
                 commandInput = consoleInput.getIntInput();
 
                 if (commandInput == 1) { // Cart to Order
-                    order.addCartToOrderList(cart.getCartList());
-                    cart.clearCartList();
+                    int ratio = checkGradeForDiscount();
+                    double price = order.addCartToOrderList(cart.getCartList(), ratio);
+
+                    consoleOutput.print(String.format(
+                            "주문이 완료되었습니다. 금액은 W %.1f 입니다.",
+                            price
+                    ));
                     break;
                 } else if (commandInput == 2) { // 장바구니에서 삭제 후 다시 시작
-                    while (true) {
-                        consoleOutput.print("\n삭제 할 메뉴를 선택 해주세요.");
-                        consoleOutput.print("0. 취소");
-
-                        try {
-                            commandInput = consoleInput.getIntInput();
-
-                            if (commandInput == 0) {
-                                break;
-                            } else if (commandInput < 0 || commandInput > cart.getCartList().size()) {
-                                throw new NotValidInputException();
-                            }
-
-                            cart.removeFromCart(
-                                    cart.getCartList().get(commandInput -1)
-                            );
-
-                            break;
-                        } catch (NotValidInputException e) {
-                            consoleOutput.print(e.getMessage());
-                            consoleInput.getStringInput();
-                        }
-                    }
+                    deleteFromCart();
                 } else if (commandInput == 3) { // 나가기
                     break;
                 }
                  else {
                     throw new NotValidInputException();
                 }
+            } catch (NotValidInputException e) {
+                consoleOutput.print(e.getMessage());
+                consoleInput.getStringInput();
+            }
+        }
+    }
+
+    private void deleteFromCart() {
+        int commandInput;
+
+        while (true) {
+            consoleOutput.print("\n삭제 할 메뉴를 선택 해주세요.");
+            consoleOutput.print("0. 취소");
+
+            try {
+                commandInput = consoleInput.getIntInput();
+
+                if (commandInput == 0) {
+                    break;
+                } else if (commandInput < 0 || commandInput > cart.getCartList().size()) {
+                    throw new NotValidInputException();
+                }
+
+                cart.removeFromCart(
+                        cart.getCartList().get(commandInput -1)
+                );
+
+                break;
+            } catch (NotValidInputException e) {
+                consoleOutput.print(e.getMessage());
+                consoleInput.getStringInput();
+            }
+        }
+    }
+
+    private int checkGradeForDiscount() {
+        int commandInput;
+        int length = Grade.getLength();
+
+        while (true) {
+            try {
+                consoleOutput.print(Grade.getGradList());
+
+                commandInput = consoleInput.getIntInput();
+
+                if (commandInput < 1 || commandInput > length) {
+                    throw new NotValidInputException();
+                }
+
+                return Grade.getDiscountRatio(commandInput);
             } catch (NotValidInputException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput();

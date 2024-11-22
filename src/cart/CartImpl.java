@@ -34,17 +34,7 @@ public class CartImpl implements Cart {
     }
 
     @Override
-    public boolean getState() {
-        return this.state;
-    }
-
-    @Override
-    public void setState(boolean state) {
-        this.state = state;
-    }
-
-    @Override
-    public void add(MenuItem menuItem) {
+    public void addToCart(MenuItem menuItem) {
         this.cartList.add(menuItem);
         setSumPrice(menuItem.getPrice());
     }
@@ -77,7 +67,7 @@ public class CartImpl implements Cart {
         // 스트림안에서 인덱스를 사용하기위해 AtomicInteger 사용
         AtomicInteger idx = new AtomicInteger(1);
 
-        result.append("\n[ CART ]\n");
+        result.append("\n[ ORDER MENU ]\n");
 
         if (cartList.isEmpty()) {
             throw new CartEmptyException();
