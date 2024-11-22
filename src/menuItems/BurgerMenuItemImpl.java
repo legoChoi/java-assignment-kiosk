@@ -1,11 +1,11 @@
 package menuItems;
 
-public class BurgerMenuItem implements MenuItem {
+public class BurgerMenuItemImpl implements MenuItem {
     private String name;
     private double price;
     private String description;
 
-    public BurgerMenuItem(String name, double price, String description) {
+    public BurgerMenuItemImpl(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;

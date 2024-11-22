@@ -1,26 +1,26 @@
 package menus;
 
-import menuItems.BeverageMenuItem;
+import menuItems.BeverageMenuItemImpl;
 import menuItems.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BeverageMenu implements Menu {
+public class BeverageMenuImpl implements Menu {
     private final List<MenuItem> beverageMenuItemList;
     private boolean state = true;
 
-    public BeverageMenu() {
+    public BeverageMenuImpl() {
         this.beverageMenuItemList = new ArrayList<>();
 
         beverageMenuItemList.add(
-                new BeverageMenuItem(
+                new BeverageMenuItemImpl(
                         "Coca-cola",
                         1,
                         "시원한 코카콜라"
                 ));
         beverageMenuItemList.add(
-                new BeverageMenuItem(
+                new BeverageMenuItemImpl(
                         "Sprite",
                         1,
                         "청량한 스프라이트"
