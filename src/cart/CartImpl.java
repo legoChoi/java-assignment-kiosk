@@ -62,6 +62,7 @@ public class CartImpl implements Cart {
     @Override
     public void clearCartList() {
         this.cartList.clear();
+        this.sumPrice = 0;
     }
 
     @Override

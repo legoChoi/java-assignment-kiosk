@@ -7,6 +7,7 @@ import order.Order;
 import shared.exceptions.exceptionMessages.ExceptionMessages;
 import shared.exceptions.exceptions.CartEmptyException;
 import shared.exceptions.exceptions.NotValidInputException;
+import shared.exceptions.exceptions.OrderListEmptyException;
 import shared.io.input.Input;
 import shared.io.output.Output;
 
@@ -73,7 +74,7 @@ public class Kiosk {
                 commandInput = consoleInput.getIntInput();
 
                 setState(switchMenuByCommandInput(commandInput));
-            } catch (NotValidInputException | CartEmptyException e) {
+            } catch (NotValidInputException | CartEmptyException | OrderListEmptyException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput(); // 개행 문자 처리
             }
@@ -107,6 +108,7 @@ public class Kiosk {
         }
         else if (commandInput == 5) { // order cancel
             // 진행중인 주문 확인 후 취소 로직
+            deleteFromOrderList();
             return true;
         }
         else {
@@ -133,8 +135,7 @@ public class Kiosk {
                     continue;
                 }
                 if (commandInput < 0 || commandInput > menuItemList.size()) {
-                    consoleOutput.print(ExceptionMessages.NOT_VALID_MENU_INPUT.getMessage());
-                    continue;
+                    throw new NotValidInputException();
                 }
 
                 menuItem = menuItemList.get(commandInput - 1);
@@ -231,6 +232,29 @@ public class Kiosk {
                  else {
                     throw new NotValidInputException();
                 }
+            } catch (NotValidInputException e) {
+                consoleOutput.print(e.getMessage());
+                consoleInput.getStringInput();
+            }
+        }
+    }
+
+    private void deleteFromOrderList() {
+        int commandInput;
+        while (true) {
+            consoleOutput.print(order.show());
+            try{
+                commandInput = consoleInput.getIntInput();
+
+                if (commandInput == 0) {
+                    break;
+                } else if (commandInput > 0 && commandInput < order.getOrderList().size() + 1) {
+                    order.remove(commandInput - 1);
+                    break;
+                }
+
+                throw new NotValidInputException();
+
             } catch (NotValidInputException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput();
