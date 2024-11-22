@@ -8,9 +8,20 @@ import java.util.List;
 public class CartImpl implements Cart {
 
     private final List<MenuItem> cartItems;
+    private boolean state = true;
 
     public CartImpl() {
         this.cartItems = new ArrayList<>();
+    }
+
+    @Override
+    public boolean getState() {
+        return this.state;
+    }
+
+    @Override
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     @Override
