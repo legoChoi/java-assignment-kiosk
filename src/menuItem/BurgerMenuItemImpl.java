@@ -1,4 +1,4 @@
-package menuItems;
+package menuItem;
 
 public class BurgerMenuItemImpl implements MenuItem {
     private String name;

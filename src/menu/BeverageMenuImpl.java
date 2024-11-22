@@ -1,7 +1,7 @@
-package menus;
+package menu;
 
-import menuItems.BeverageMenuItemImpl;
-import menuItems.MenuItem;
+import menuItem.BeverageMenuItemImpl;
+import menuItem.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

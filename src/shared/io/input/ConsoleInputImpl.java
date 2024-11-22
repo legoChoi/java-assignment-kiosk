@@ -14,6 +14,7 @@ public class ConsoleInputImpl implements Input {
 
     @Override
     public int getIntInput() {
+        System.out.print(">> ");
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {

@@ -1,4 +1,4 @@
-package menuItems;
+package menuItem;
 
 public interface MenuItem {
     String getName();

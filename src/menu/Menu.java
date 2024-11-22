@@ -1,6 +1,6 @@
-package menus;
+package menu;
 
-import menuItems.MenuItem;
+import menuItem.MenuItem;
 
 import java.util.List;
 
