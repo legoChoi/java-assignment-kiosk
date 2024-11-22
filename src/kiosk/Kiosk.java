@@ -25,10 +25,18 @@ public class Kiosk {
         start();
     }
 
+    /**
+     *
+     * @return 현재 인스턴스의 state 값
+     */
     private boolean getState() {
         return state;
     }
 
+    /**
+     *
+     * @param state 변환할 state 값
+     */
     private void setState(boolean state) {
         this.state = state;
     }
@@ -60,6 +68,7 @@ public class Kiosk {
         }
     }
 
+    /** 메인 메뉴 보여주는 메소드 **/
     private void showMainMenu() {
         String title = "\n[ MAIN MENU ]\n" +
                 "1. Burgers\n" +
@@ -70,6 +79,10 @@ public class Kiosk {
         consoleOutput.print(title);
     }
 
+    /**
+     * Menu 구현체의 메뉴 리스트를 보여주는 메소드
+     * @param menu Menu 구현체
+     */
     private void showMenu(Menu menu) {
         int commandInput;
         List<MenuItem> menuItemList = menu.getList();
