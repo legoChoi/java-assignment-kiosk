@@ -1,7 +1,7 @@
-package menus;
+package menu;
 
-import menuItems.BurgerMenuItemImpl;
-import menuItems.MenuItem;
+import menuItem.BurgerMenuItemImpl;
+import menuItem.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;

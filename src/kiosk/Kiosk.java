@@ -1,9 +1,11 @@
 package kiosk;
 
 import cart.Cart;
-import menuItems.MenuItem;
-import menus.Menu;
+import menuItem.MenuItem;
+import menu.Menu;
+import order.Order;
 import shared.exceptions.exceptionMessages.ExceptionMessages;
+import shared.exceptions.exceptions.CartEmptyException;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 import shared.io.output.Output;
@@ -17,13 +19,15 @@ public class Kiosk {
     private final Input consoleInput;
     private final Output consoleOutput;
     private final Cart cart;
+    private final Order order;
 
-    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart) {
+    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart, Order order) {
         this.consoleInput = consoleInput;
         this.consoleOutput = consoleOutput;
         this.burgerMenu = burgerMenu;
         this.beverageMenu = beverageMenu;
         this.cart = cart;
+        this.order = order;
     }
 
     /**
@@ -69,7 +73,7 @@ public class Kiosk {
                 commandInput = consoleInput.getIntInput();
 
                 setState(switchMenuByCommandInput(commandInput));
-            } catch (NotValidInputException e) {
+            } catch (NotValidInputException | CartEmptyException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput(); // 개행 문자 처리
             }
@@ -85,37 +89,36 @@ public class Kiosk {
         if (commandInput == 0) {
             return false;
         }
-        else if (commandInput < 0 || commandInput > 3) {
-            throw new NotValidInputException();
-        }
         else if (commandInput == 1) {
-            showMenu(burgerMenu);
+            showMenuBranch(burgerMenu);
             return true;
         }
         else if (commandInput == 2) {
-            showMenu(beverageMenu);
+            showMenuBranch(beverageMenu);
             return true;
         }
         else if (commandInput == 3) { // 디저트 메뉴는 아직 없음
             return true;
         }
-        else if (commandInput == 4) {
-            // 장바구니 확인 후 주문 로직
+        else if (commandInput == 4) { // cart to order
+            // 장바구니 확인 후 주문 & 취소 로직
+            showCartMenuBranch();
             return true;
         }
-        else if (commandInput == 5) {
-            // 장바구니 확인 후 취소 로직
+        else if (commandInput == 5) { // order cancel
+            // 진행중인 주문 확인 후 취소 로직
             return true;
         }
-
-        return false;
+        else {
+            throw new NotValidInputException();
+        }
     }
 
     /**
      * Menu 구현체의 메뉴 리스트를 보여주는 메소드
      * @param menu Menu 구현체
      */
-    private void showMenu(Menu menu) {
+    private void showMenuBranch(Menu menu) {
         int commandInput;
         List<MenuItem> menuItemList = menu.getList();
         MenuItem menuItem;
@@ -130,7 +133,7 @@ public class Kiosk {
                     continue;
                 }
                 if (commandInput < 0 || commandInput > menuItemList.size()) {
-                    consoleOutput.print(ExceptionMessages.NotValidMenuInput.getMessage());
+                    consoleOutput.print(ExceptionMessages.NOT_VALID_MENU_INPUT.getMessage());
                     continue;
                 }
 
@@ -143,7 +146,7 @@ public class Kiosk {
                         menuItem.getDescription()
                 ));
 
-                showCartMenu(menuItem);
+                addMenuToCart(menuItem);
 
                 menu.setState(false);
             } catch (NotValidInputException e) {
@@ -155,13 +158,13 @@ public class Kiosk {
         menu.setState(true);
     }
 
-    private void showCartMenu(MenuItem menuItem) {
+    private void addMenuToCart(MenuItem menuItem) {
         int commandInput;
 
-        while (cart.getState()) {
+        while (true) {
             consoleOutput.print("\n위 메뉴를 장바구니에 추가하시겠습니까?");
             consoleOutput.print(String.format(
-                    "1. %-15s 2. %s",
+                    "1. %-10s 2. %s",
                     "확인",
                     "취소"
             ));
@@ -173,21 +176,65 @@ public class Kiosk {
                     cart.add(menuItem);
                     break;
                 }
-                if (commandInput == 2) {
+                else if (commandInput == 2) {
                     break;
-                }
-
-                if (commandInput <= 0 || commandInput > 2) {
+                } else {
                     throw new NotValidInputException();
                 }
-
-                cart.setState(false);
             } catch (NotValidInputException e) {
                 consoleOutput.print(e.getMessage());
                 consoleInput.getStringInput(); // 개행 문자 처리
             }
         }
+    }
 
-        cart.setState(true);
+    private void showCartMenuBranch() {
+        int commandInput;
+
+        while (true) {
+            consoleOutput.print(cart.show());
+
+            try {
+                commandInput = consoleInput.getIntInput();
+
+                if (commandInput == 1) { // Cart to Order
+                    order.addCartToOrderList(cart.getCartList());
+                    cart.clearCartList();
+                    break;
+                } else if (commandInput == 2) { // 장바구니에서 삭제 후 다시 시작
+                    while (true) {
+                        consoleOutput.print("\n삭제 할 메뉴를 선택 해주세요.");
+                        consoleOutput.print("0. 취소");
+
+                        try {
+                            commandInput = consoleInput.getIntInput();
+
+                            if (commandInput == 0) {
+                                break;
+                            } else if (commandInput < 0 || commandInput > cart.getCartList().size()) {
+                                throw new NotValidInputException();
+                            }
+
+                            cart.removeFromCart(
+                                    cart.getCartList().get(commandInput -1)
+                            );
+
+                            break;
+                        } catch (NotValidInputException e) {
+                            consoleOutput.print(e.getMessage());
+                            consoleInput.getStringInput();
+                        }
+                    }
+                } else if (commandInput == 3) { // 나가기
+                    break;
+                }
+                 else {
+                    throw new NotValidInputException();
+                }
+            } catch (NotValidInputException e) {
+                consoleOutput.print(e.getMessage());
+                consoleInput.getStringInput();
+            }
+        }
     }
 }

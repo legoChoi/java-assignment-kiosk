@@ -1,6 +1,7 @@
 import cart.CartImpl;
-import menus.BeverageMenuImpl;
-import menus.BurgerMenuImpl;
+import menu.BeverageMenuImpl;
+import menu.BurgerMenuImpl;
+import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
 import shared.io.output.ConsoleOutputImpl;
 import kiosk.Kiosk;
@@ -16,7 +17,8 @@ public class Main {
                 new ConsoleOutputImpl(),
                 new BurgerMenuImpl(),
                 new BeverageMenuImpl(),
-                new CartImpl()
+                new CartImpl(),
+                new OrderImpl()
         ).start();
 
         scanner.close();
