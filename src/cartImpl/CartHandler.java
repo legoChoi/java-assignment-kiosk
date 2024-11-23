@@ -46,9 +46,9 @@ public class CartHandler {
             view.append(String.format(
                     "%d. %-15s| W %.1f | %s\n",
                     idx++,
-                    item.getName(),
-                    item.getPrice(),
-                    item.getDescription()));
+                    item.name(),
+                    item.price(),
+                    item.description()));
         }
 
         view.append("\n[ Total ]\n");
@@ -106,7 +106,7 @@ public class CartHandler {
                 price = orderImpl.addCartToOrderList(cartImpl.getCartList(), cartImpl.getSumPrice(), ratio);
                 System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n", price);
 
-                cartImpl.clearCartList();
+                cartImpl.initCartList();
                 break;
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());

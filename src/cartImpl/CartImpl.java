@@ -9,6 +9,9 @@ public class CartImpl implements Cart {
     private final List<MenuItem> cartList;
     private double sumPrice = 0;
 
+    /**
+     * 생성자
+     */
     public CartImpl() {
         this.cartList = new ArrayList<>();
     }
@@ -30,25 +33,43 @@ public class CartImpl implements Cart {
         this.sumPrice += sumPrice;
     }
 
+    /**
+     * 삭제 시에 호출되는 메소드.
+     * 인자로 들어오는 리스트로 바꾼다.
+     * @param cartList 새로 넣을 리스트
+     */
+    @Override
+    public void setCartList(List<MenuItem> cartList) {
+        this.cartList.clear();
+        this.cartList.addAll(cartList);
+    }
+
+    /**
+     * 장바구니에 메뉴를 추가하는 메소드.
+     * @param menuItem 장바구니에 추가 할 MenuItem 객체
+     */
     @Override
     public void addToCart(MenuItem menuItem) {
         this.cartList.add(menuItem);
-        setSumPrice(menuItem.getPrice());
+        setSumPrice(menuItem.price());
     }
 
+    /**
+     *
+     * @param menuItem
+     */
     @Override
     public void removeFromCart(MenuItem menuItem) {
-        setSumPrice(-menuItem.getPrice());
+        setSumPrice(-menuItem.price());
 
         // 스트림을 활용한 객체 제거
-        this.cartList.stream()
-                .filter(item -> item.equals(menuItem))
-                .toList()
-                .forEach(this.cartList::remove);
+        setCartList(this.cartList.stream()
+                .filter(item -> item != menuItem)
+                .toList());
     }
 
     @Override
-    public void clearCartList() {
+    public void initCartList() {
         this.cartList.clear();
         this.sumPrice = 0;
     }
