@@ -1,9 +1,9 @@
 package menuItem;
 
 public class BurgerMenuItemImpl implements MenuItem {
-    private String name;
-    private double price;
-    private String description;
+    private final String name;
+    private final double price;
+    private final String description;
 
     public BurgerMenuItemImpl(String name, double price, String description) {
         this.name = name;

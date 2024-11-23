@@ -7,7 +7,6 @@ public class MainMenuHandler {
 
     private final Input consoleInput;
 
-
     public MainMenuHandler(Input consoleInput) {
         this.consoleInput = consoleInput;
     }

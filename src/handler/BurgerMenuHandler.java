@@ -1,12 +1,10 @@
 package handler;
 
 import cartImpl.Cart;
-import grade.Grade;
 import menu.Menu;
 import menuItem.MenuItem;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
-
 import java.util.List;
 
 public class BurgerMenuHandler implements MenuHandler {
@@ -14,7 +12,6 @@ public class BurgerMenuHandler implements MenuHandler {
     private final Input consoleInputImpl;
     private final Menu burgerMenuImpl;
     private final Cart cartImpl;
-    private boolean state = true;
 
     public BurgerMenuHandler(Input consoleInput, Menu burgerMenu, Cart cart) {
         this.consoleInputImpl = consoleInput;
@@ -94,7 +91,6 @@ public class BurgerMenuHandler implements MenuHandler {
                 }
                 if (response != -1) {
                     addMenuToCart(burgerMenuImpl.getList().get(response - 1));
-                    break;
                 }
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());
