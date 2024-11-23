@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BurgerMenuImpl implements Menu {
     private final List<MenuItem> burgerMenuItemList;
-    private final String NAME = "Burgers";
+    private final String TITLE = "BURGERS MENU";
     private boolean state = true;
 
     public BurgerMenuImpl() {
@@ -45,6 +45,11 @@ public class BurgerMenuImpl implements Menu {
     @Override
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.TITLE;
     }
 
     @Override

@@ -8,7 +8,7 @@ import shared.io.input.Input;
 
 import java.util.List;
 
-public class BeverageMenuHandler {
+public class BeverageMenuHandler implements MenuHandler {
 
     private final Input consoleInputImpl;
     private final Menu beverageMenuImpl;
@@ -25,7 +25,7 @@ public class BeverageMenuHandler {
         List<MenuItem> burgerList = beverageMenuImpl.getList();
         int index = 1;
 
-        view.append("\n[ DRINK MENU ]\n");
+        view.append("\n[ ").append(this.beverageMenuImpl.getTitle()).append(" ]\n");
 
         for (MenuItem item : burgerList) {
             view.append(String.format("%d. %-15s| W %.1f | %s\n",
@@ -56,10 +56,33 @@ public class BeverageMenuHandler {
     }
 
     private void addMenuToCart(MenuItem menu) {
-        System.out.println("선택한 메뉴: " + menu.toString());
-        cartImpl.addMenuToCart(menu);
+        while (true) {
+            System.out.println("선택한 메뉴: " + menu.toString());
+            System.out.println("\n\"" + menu + "\"");
+            System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
+            System.out.printf("1. %-10s 2. %s%n", "확인", "취소");
+
+            try {
+                int response = validateCommandInput(1, 2);
+
+                if (response == 1) {
+                    cartImpl.addToCart(menu);
+                    System.out.println(menu.getName() + "가 장바구니에 추가되었습니다.");
+                    break;
+                }
+
+                if (response == 2) {
+                    break;
+                }
+
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            }
+        }
     }
 
+    @Override
     public void showMenu() {
         int response;
 

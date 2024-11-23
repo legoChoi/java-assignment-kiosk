@@ -12,7 +12,6 @@ import shared.io.input.ConsoleInputImpl;
 import shared.io.input.Input;
 import shared.io.output.ConsoleOutputImpl;
 import kiosk.Kiosk;
-import shared.io.output.Output;
 
 import java.util.Scanner;
 
