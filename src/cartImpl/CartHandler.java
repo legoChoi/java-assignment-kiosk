@@ -6,7 +6,6 @@ import order.Order;
 import shared.exceptions.exceptions.CartEmptyException;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
-
 import java.util.List;
 
 public class CartHandler {
@@ -14,7 +13,6 @@ public class CartHandler {
     private final Input consoleInputImpl;
     private final Cart cartImpl;
     private final Order orderImpl;
-    private boolean state = true;
 
     public CartHandler(Input input, Cart cart, Order orderImpl) {
         this.consoleInputImpl = input;
@@ -33,13 +31,14 @@ public class CartHandler {
     }
 
     private String buildView() {
-        StringBuilder view = new StringBuilder();
         List<MenuItem> cartList = cartImpl.getCartList();
-        int idx = 1;
 
-        if (cartList.isEmpty()) {
+        if (this.cartImpl.getCartList().isEmpty()) {
             throw new CartEmptyException();
         }
+
+        StringBuilder view = new StringBuilder();
+        int idx = 1;
 
         view.append("\n[ ORDER MENU ]\n");
 
@@ -106,6 +105,8 @@ public class CartHandler {
                 ratio = Grade.getDiscountRatio(response);
                 price = orderImpl.addCartToOrderList(cartImpl.getCartList(), cartImpl.getSumPrice(), ratio);
                 System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n", price);
+
+                cartImpl.clearCartList();
                 break;
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());
@@ -124,14 +125,13 @@ public class CartHandler {
             try {
                 response = validateCommandInput(0, cartImpl.getCartList().size());
 
-                if (response == 0 || response == -1) {
+                if (response == 0) {
                     break;
                 }
 
                 cartImpl.removeFromCart(
                         cartImpl.getCartList().get(response -1)
                 );
-
                 break;
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());

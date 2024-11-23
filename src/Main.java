@@ -11,13 +11,13 @@ import order.OrderHandler;
 import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
 import shared.io.input.Input;
-import shared.io.output.ConsoleOutputImpl;
 import kiosk.Kiosk;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         Input consoleInputImpl = new ConsoleInputImpl(scanner);
 
@@ -25,13 +25,6 @@ public class Main {
         Order orderImpl = new OrderImpl();
 
         new Kiosk(
-                consoleInputImpl,
-                new ConsoleOutputImpl(),
-                new BurgerMenuImpl(),
-                new BeverageMenuImpl(),
-                new CartImpl(),
-                new OrderImpl(),
-
                 new MainMenuHandler(
                         consoleInputImpl
                 ),
@@ -53,9 +46,9 @@ public class Main {
                 new OrderHandler(
                         consoleInputImpl,
                         cartImpl,
-                        new OrderImpl()
+                        orderImpl
                 )
-        ).real();
+        ).start();
 
         scanner.close();
     }
