@@ -20,6 +20,12 @@ public class CartHandler {
         this.orderImpl = orderImpl;
     }
 
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     */
     private int validateCommandInput(int min, int max) {
         int response = consoleInputImpl.getIntInput();
 
@@ -30,6 +36,10 @@ public class CartHandler {
         return response;
     }
 
+    /**
+     *
+     * @return 장바구니 리스트 문자열 반환
+     */
     private String buildView() {
         List<MenuItem> cartList = cartImpl.getCartList();
 
@@ -93,6 +103,9 @@ public class CartHandler {
         }
     }
 
+    /**
+     * 장바구니에 있는 메뉴 리스트를 주문 리스트에 삽입하는 메소드
+     */
     private void makeOrderFromCart() {
         int response;
         int ratio;
@@ -115,6 +128,9 @@ public class CartHandler {
         }
     }
 
+    /**
+     * 장바구니에서 특정 메뉴 삭제 메소드
+     */
     private void deleteMenuFromCart() {
         int response;
 

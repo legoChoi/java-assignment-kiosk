@@ -20,6 +20,10 @@ public class MenuHandlerImpl implements MenuHandler {
         this.cartImpl = cartImpl;
     }
 
+    /**
+     *
+     * @return 메뉴 리스트 문자열 반환
+     */
     private String buildView() {
         StringBuilder view = new StringBuilder();
         List<MenuItem> burgerList = MenuImpl.getList();
@@ -39,6 +43,12 @@ public class MenuHandlerImpl implements MenuHandler {
         return view.toString();
     }
 
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     */
     private int validateCommandInput(int min, int max) {
         int response = consoleInputImpl.getIntInput();
 
@@ -49,6 +59,10 @@ public class MenuHandlerImpl implements MenuHandler {
         return response;
     }
 
+    /**
+     * 인자로 넘어온 메뉴를 장바구니 리스트에 추가
+     * @param menu 추가 할 메뉴
+     */
     private void addMenuToCart(MenuItem menu) {
         int response;
 

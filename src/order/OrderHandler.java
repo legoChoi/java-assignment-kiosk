@@ -20,6 +20,12 @@ public class OrderHandler {
         this.orderImpl = order;
     }
 
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     */
     private int validateCommandInput(int min, int max) {
         int response = consoleInputImpl.getIntInput();
 
@@ -30,6 +36,10 @@ public class OrderHandler {
         return response;
     }
 
+    /**
+     *
+     * @return 주문 리스트 문자열 반환
+     */
     private String buildView() {
         if (orderImpl.getOrderListSize() == 0) {
             throw new OrderListEmptyException();
