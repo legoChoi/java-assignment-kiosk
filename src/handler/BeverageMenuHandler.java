@@ -8,21 +8,21 @@ import shared.io.input.Input;
 
 import java.util.List;
 
-public class BurgerMenuHandler {
+public class BeverageMenuHandler {
 
     private final Input consoleInputImpl;
-    private final Menu burgerMenuImpl;
+    private final Menu beverageMenuImpl;
     private final Cart cartImpl;
 
-    public BurgerMenuHandler(Input consoleInput, Menu burgerMenu, Cart cart) {
-        this.consoleInputImpl = consoleInput;
-        this.burgerMenuImpl = burgerMenu;
-        this.cartImpl = cart;
+    public BeverageMenuHandler(Input consoleInputImpl, Menu beverageMenuImpl, Cart cartImpl) {
+        this.consoleInputImpl = consoleInputImpl;
+        this.beverageMenuImpl = beverageMenuImpl;
+        this.cartImpl = cartImpl;
     }
 
     private String buildView() {
         StringBuilder view = new StringBuilder();
-        List<MenuItem> burgerList = burgerMenuImpl.getList();
+        List<MenuItem> burgerList = beverageMenuImpl.getList();
         int index = 1;
 
 
@@ -67,15 +67,16 @@ public class BurgerMenuHandler {
 
         while (true) {
             System.out.println(buildView());
-            response = validateCommandInput(0, burgerMenuImpl.getList().size());
+            response = validateCommandInput(0, beverageMenuImpl.getList().size());
 
             if (response == 0) {
                 break;
             }
 
             if (response != -1) {
-                addMenuToCart(burgerMenuImpl.getList().get(response - 1));
+                addMenuToCart(beverageMenuImpl.getList().get(response - 1));
             }
         }
     }
+
 }

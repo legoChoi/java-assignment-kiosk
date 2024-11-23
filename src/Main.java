@@ -1,5 +1,6 @@
 import cart.Cart;
 import cart.CartImpl;
+import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
@@ -37,6 +38,11 @@ public class Main {
                 new BurgerMenuHandler(
                         consoleInputImpl,
                         new BurgerMenuImpl(),
+                        cart
+                ),
+                new BeverageMenuHandler(
+                        consoleInputImpl,
+                        new BeverageMenuImpl(),
                         cart
                 )
         ).real();
