@@ -6,6 +6,7 @@ import handler.BurgerMenuHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
 import handler.MainMenuHandler;
+import order.OrderHandler;
 import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
 import shared.io.input.Input;
@@ -46,6 +47,11 @@ public class Main {
                 new CartHandler(
                         consoleInputImpl,
                         cart
+                ),
+                new OrderHandler(
+                        consoleInputImpl,
+                        cart,
+                        new OrderImpl()
                 )
         ).real();
 

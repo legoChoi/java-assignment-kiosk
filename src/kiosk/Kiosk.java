@@ -7,6 +7,7 @@ import handler.BurgerMenuHandler;
 import handler.MainMenuHandler;
 import menu.Menu;
 import order.Order;
+import order.OrderHandler;
 import shared.io.input.Input;
 import shared.io.output.Output;
 
@@ -23,8 +24,9 @@ public class Kiosk {
     private final BurgerMenuHandler burgerMenuHandler;
     private final BeverageMenuHandler beverageMenuHandler;
     private final CartHandler cartHandler;
+    private final OrderHandler orderHandler;
 
-    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart, Order order, MainMenuHandler mainMenuHandler, BurgerMenuHandler burgerMenuHandler, BeverageMenuHandler beverageMenuHandler, CartHandler cartHandler) {
+    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart, Order order, MainMenuHandler mainMenuHandler, BurgerMenuHandler burgerMenuHandler, BeverageMenuHandler beverageMenuHandler, CartHandler cartHandler, OrderHandler orderHandler) {
         this.consoleInput = consoleInput;
         this.consoleOutput = consoleOutput;
         this.burgerMenu = burgerMenu;
@@ -36,6 +38,7 @@ public class Kiosk {
         this.burgerMenuHandler = burgerMenuHandler;
         this.beverageMenuHandler = beverageMenuHandler;
         this.cartHandler = cartHandler;
+        this.orderHandler = orderHandler;
     }
 
     public void real() {
@@ -56,15 +59,11 @@ public class Kiosk {
             case 1 -> burgerMenuHandler.showMenu();
             case 2 -> beverageMenuHandler.showMenu();
             case 3 -> {
+                // 디저트 메뉴 미구현
                 return;
             }
             case 4 -> cartHandler.showMenu();
-            case 5 -> {
-                return;
-            }
-            case 6 -> {
-                return;
-            }
+            case 5 -> orderHandler.showMenu();
         }
     }
 //
