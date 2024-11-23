@@ -1,11 +1,12 @@
-import cart.Cart;
-import cart.CartHandler;
-import cart.CartImpl;
+import cartImpl.Cart;
+import cartImpl.CartHandler;
+import cartImpl.CartImpl;
 import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
 import handler.MainMenuHandler;
+import order.Order;
 import order.OrderHandler;
 import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
@@ -20,7 +21,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Input consoleInputImpl = new ConsoleInputImpl(scanner);
 
-        Cart cart = new CartImpl();
+        Cart cartImpl = new CartImpl();
+        Order orderImpl = new OrderImpl();
 
         new Kiosk(
                 consoleInputImpl,
@@ -36,20 +38,21 @@ public class Main {
                 new BurgerMenuHandler(
                         consoleInputImpl,
                         new BurgerMenuImpl(),
-                        cart
+                        cartImpl
                 ),
                 new BeverageMenuHandler(
                         consoleInputImpl,
                         new BeverageMenuImpl(),
-                        cart
+                        cartImpl
                 ),
                 new CartHandler(
                         consoleInputImpl,
-                        cart
+                        cartImpl,
+                        orderImpl
                 ),
                 new OrderHandler(
                         consoleInputImpl,
-                        cart,
+                        cartImpl,
                         new OrderImpl()
                 )
         ).real();

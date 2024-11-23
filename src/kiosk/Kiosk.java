@@ -1,7 +1,7 @@
 package kiosk;
 
-import cart.Cart;
-import cart.CartHandler;
+import cartImpl.Cart;
+import cartImpl.CartHandler;
 import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import handler.MainMenuHandler;

@@ -21,16 +21,15 @@ public class OrderImpl implements Order {
     }
 
     @Override
-    public double addCartToOrderList(List<MenuItem> menuList, int ratio) {
+    public double addCartToOrderList(List<MenuItem> menuList, double originalPrice, int ratio) {
         this.orderList.add(
                 List.copyOf(menuList)
         );
 
-        double sumPrice = menuList.stream().mapToDouble(MenuItem::getPrice).sum();
-        double discount = sumPrice * (double) ratio / 100;
-        this.priceList.add(sumPrice - discount);
+        double price = originalPrice * (1 - ratio / 100.0);
+        this.priceList.add(price);
 
-        return sumPrice - discount;
+        return price;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package handler;
 
-import cart.Cart;
+import cartImpl.Cart;
+import grade.Grade;
 import menu.Menu;
 import menuItem.MenuItem;
 import shared.exceptions.exceptions.NotValidInputException;
@@ -13,6 +14,7 @@ public class BurgerMenuHandler implements MenuHandler {
     private final Input consoleInputImpl;
     private final Menu burgerMenuImpl;
     private final Cart cartImpl;
+    private boolean state = true;
 
     public BurgerMenuHandler(Input consoleInput, Menu burgerMenu, Cart cart) {
         this.consoleInputImpl = consoleInput;
@@ -40,22 +42,18 @@ public class BurgerMenuHandler implements MenuHandler {
     }
 
     private int validateCommandInput(int min, int max) {
-        try {
-            int response = consoleInputImpl.getIntInput();
+        int response = consoleInputImpl.getIntInput();
 
-            if (response < min || response > max) {
-                throw new NotValidInputException();
-            }
-
-            return response;
-        } catch (NotValidInputException e) {
-            System.out.println(e.getMessage());
-            consoleInputImpl.getStringInput();
-            return -1;
+        if (response < min || response > max) {
+            throw new NotValidInputException();
         }
+
+        return response;
     }
 
     private void addMenuToCart(MenuItem menu) {
+        int response;
+
         while (true) {
             System.out.println("선택한 메뉴: " + menu.toString());
             System.out.println("\n\"" + menu + "\"");
@@ -63,7 +61,7 @@ public class BurgerMenuHandler implements MenuHandler {
             System.out.printf("1. %-10s 2. %s%n", "확인", "취소");
 
             try {
-                int response = validateCommandInput(1, 2);
+                response = validateCommandInput(1, 2);
 
                 if (response == 1) {
                     cartImpl.addToCart(menu);
@@ -87,16 +85,20 @@ public class BurgerMenuHandler implements MenuHandler {
         int response;
 
         while (true) {
-            System.out.println(buildView());
-            response = validateCommandInput(0, burgerMenuImpl.getList().size());
+            try {
+                System.out.println(buildView());
+                response = validateCommandInput(0, burgerMenuImpl.getList().size());
 
-            if (response == 0) {
-                break;
-            }
-
-            if (response != -1) {
-                addMenuToCart(burgerMenuImpl.getList().get(response - 1));
-                break;
+                if (response == 0) {
+                    break;
+                }
+                if (response != -1) {
+                    addMenuToCart(burgerMenuImpl.getList().get(response - 1));
+                    break;
+                }
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
             }
         }
     }
