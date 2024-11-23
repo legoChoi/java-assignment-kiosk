@@ -2,34 +2,34 @@ package handler;
 
 import cartImpl.Cart;
 import menu.Menu;
-import menuItem.BeverageMenuItemImpl;
+import menuItem.BurgerMenuItemImpl;
 import menuItem.MenuItem;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 import java.util.List;
 
-public class BeverageMenuHandler implements MenuHandler {
+public class MenuHandlerImpl implements MenuHandler {
 
     private final Input consoleInputImpl;
-    private final Menu beverageMenuImpl;
+    private final Menu MenuImpl;
     private final Cart cartImpl;
 
-    public BeverageMenuHandler(Input consoleInputImpl, Menu beverageMenuImpl, Cart cartImpl) {
+    public MenuHandlerImpl(Input consoleInputImpl, Menu menuImpl, Cart cartImpl) {
         this.consoleInputImpl = consoleInputImpl;
-        this.beverageMenuImpl = beverageMenuImpl;
+        this.MenuImpl = menuImpl;
         this.cartImpl = cartImpl;
     }
 
     private String buildView() {
         StringBuilder view = new StringBuilder();
-        List<MenuItem> burgerList = beverageMenuImpl.getList();
-        int index = 1;
+        List<MenuItem> burgerList = MenuImpl.getList();
+        int idx = 1;
 
-        view.append("\n[ ").append(this.beverageMenuImpl.getTitle()).append(" ]\n");
+        view.append("\n[ ").append(this.MenuImpl.getTitle()).append(" ]\n");
 
         for (MenuItem item : burgerList) {
             view.append(String.format("%d. %-15s| W %.1f | %s\n",
-                    index++,
+                    idx++,
                     item.name(),
                     item.price(),
                     item.description()));
@@ -62,7 +62,7 @@ public class BeverageMenuHandler implements MenuHandler {
                 response = validateCommandInput(1, 2);
 
                 if (response == 1) {
-                    cartImpl.addToCart(new BeverageMenuItemImpl(menu.name(), menu.price(), menu.description())); // 복사 생성자를 통한 객체 복사
+                    cartImpl.addToCart(new BurgerMenuItemImpl(menu.name(), menu.price(), menu.description())); // 복사 생성자를 통한 객체 복사
                     System.out.println(menu.name() + "가 장바구니에 추가되었습니다.");
                     break;
                 }
@@ -85,13 +85,13 @@ public class BeverageMenuHandler implements MenuHandler {
         while (true) {
             try {
                 System.out.println(buildView());
-                response = validateCommandInput(0, beverageMenuImpl.getList().size());
+                response = validateCommandInput(0, MenuImpl.getList().size());
 
                 if (response == 0) {
                     break;
                 }
                 if (response != -1) {
-                    addMenuToCart(beverageMenuImpl.getList().get(response - 1));
+                    addMenuToCart(MenuImpl.getList().get(response - 1));
                 }
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());
