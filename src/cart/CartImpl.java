@@ -94,4 +94,40 @@ public class CartImpl implements Cart {
 
         return result.toString();
     }
+
+
+    @Override
+    public void addMenuToCart(MenuItem menu) {
+        System.out.println("\n\"" + menu.toString() + "\"");
+        System.out.println(addView());
+
+//        cartList.add(menu);
+    }
+
+    private String addView() {
+
+//        while (true) {
+
+        String view = "위 메뉴를 장바구니에 추가하시겠습니까?\n" +
+                String.format(
+                        "1. %-10s 2. %s",
+                        "확인", "취소"
+                );
+
+//            commandInput = validateCommandInput();
+//
+//            if (commandInput == 1) {
+//                cart.addToCart(menuItem);
+//                consoleOutput.print(menuItem.getName() + "이 장바구니에 추가되었습니다.");
+//                break;
+//            }
+//            else if (commandInput == 2) {
+//                break;
+//            } else {
+//                consoleOutput.print(ExceptionMessages.NOT_VALID_MENU_INPUT.getMessage());
+//            }
+//        }
+
+        return view;
+    }
 }
