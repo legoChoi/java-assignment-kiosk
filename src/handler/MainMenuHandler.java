@@ -27,6 +27,10 @@ public class MainMenuHandler {
         }
     }
 
+    /**
+     *
+     * @return 메인 메뉴(카테고리) 리스트 문자열 반환
+     */
     private String buildView() {
         StringBuilder view = new StringBuilder();
 

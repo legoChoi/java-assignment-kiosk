@@ -11,6 +11,9 @@ public class BeverageMenuImpl implements Menu {
     private final List<MenuItem> beverageMenuItemList;
     private final String TITLE = "DRINKS MENU";
 
+    /**
+     * 객체 생성 동시에 메뉴 삽입
+     */
     public BeverageMenuImpl() {
         this.beverageMenuItemList = new ArrayList<>();
 

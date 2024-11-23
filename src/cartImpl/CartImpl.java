@@ -9,9 +9,6 @@ public class CartImpl implements Cart {
     private final List<MenuItem> cartList;
     private double sumPrice = 0;
 
-    /**
-     * 생성자
-     */
     public CartImpl() {
         this.cartList = new ArrayList<>();
     }
@@ -55,8 +52,8 @@ public class CartImpl implements Cart {
     }
 
     /**
-     *
-     * @param menuItem
+     * 장바구니에 동일한 메뉴가 있을 수 있으므로 주소값 비교하여 삭제
+     * @param menuItem 삭제 할 메뉴
      */
     @Override
     public void removeFromCart(MenuItem menuItem) {
@@ -68,6 +65,9 @@ public class CartImpl implements Cart {
                 .toList());
     }
 
+    /**
+     * 주문 시 호출되는 장바구니 초기화
+     */
     @Override
     public void initCartList() {
         this.cartList.clear();

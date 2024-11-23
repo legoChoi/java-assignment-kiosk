@@ -12,6 +12,9 @@ public class BurgerMenuImpl implements Menu {
     private final List<MenuItem> burgerMenuItemList;
     private final String TITLE = "BURGERS MENU";
 
+    /**
+     * 객체 생성 동시에 메뉴 삽입
+     */
     public BurgerMenuImpl() {
         this.burgerMenuItemList = new ArrayList<>();
 
