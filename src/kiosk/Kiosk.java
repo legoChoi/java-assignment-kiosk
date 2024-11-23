@@ -1,6 +1,7 @@
 package kiosk;
 
 import cart.Cart;
+import cart.CartHandler;
 import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import handler.MainMenuHandler;
@@ -21,8 +22,9 @@ public class Kiosk {
     private final MainMenuHandler mainMenuHandler;
     private final BurgerMenuHandler burgerMenuHandler;
     private final BeverageMenuHandler beverageMenuHandler;
+    private final CartHandler cartHandler;
 
-    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart, Order order, MainMenuHandler mainMenuHandler, BurgerMenuHandler burgerMenuHandler, BeverageMenuHandler beverageMenuHandler) {
+    public Kiosk(Input consoleInput, Output consoleOutput, Menu burgerMenu, Menu beverageMenu, Cart cart, Order order, MainMenuHandler mainMenuHandler, BurgerMenuHandler burgerMenuHandler, BeverageMenuHandler beverageMenuHandler, CartHandler cartHandler) {
         this.consoleInput = consoleInput;
         this.consoleOutput = consoleOutput;
         this.burgerMenu = burgerMenu;
@@ -33,6 +35,7 @@ public class Kiosk {
         this.mainMenuHandler = mainMenuHandler;
         this.burgerMenuHandler = burgerMenuHandler;
         this.beverageMenuHandler = beverageMenuHandler;
+        this.cartHandler = cartHandler;
     }
 
     public void real() {
@@ -55,9 +58,7 @@ public class Kiosk {
             case 3 -> {
                 return;
             }
-            case 4 -> {
-                return;
-            }
+            case 4 -> cartHandler.showMenu();
             case 5 -> {
                 return;
             }
