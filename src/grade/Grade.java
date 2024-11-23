@@ -23,7 +23,7 @@ public enum Grade {
         this.ratio = ratio;
     }
 
-    public static String getGradList() {
+    public static String getGradeListView() {
         StringBuilder result = new StringBuilder();
 
         result.append("\n할인 정보를 입력해주세요.");

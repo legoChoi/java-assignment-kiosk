@@ -1,4 +1,4 @@
-package cart;
+package cartImpl;
 
 import menuItem.MenuItem;
 import shared.exceptions.exceptions.CartEmptyException;
@@ -44,6 +44,7 @@ public class CartImpl implements Cart {
     public void removeFromCart(MenuItem menuItem) {
         setSumPrice(-menuItem.getPrice());
 
+        // 스트림을 활용한 객체 제거
         this.cartList.stream()
                 .filter(item -> item.equals(menuItem))
                 .toList()

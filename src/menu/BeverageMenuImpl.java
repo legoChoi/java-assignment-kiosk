@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BeverageMenuImpl implements Menu {
     private final List<MenuItem> beverageMenuItemList;
+    private final String TITLE = "DRINKS MENU";
     private boolean state = true;
 
     public BeverageMenuImpl() {
@@ -33,6 +34,11 @@ public class BeverageMenuImpl implements Menu {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.TITLE;
     }
 
     @Override

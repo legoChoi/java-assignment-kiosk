@@ -1,10 +1,11 @@
 package kiosk;
 
-import cart.Cart;
-import cart.CartHandler;
+import cartImpl.Cart;
+import cartImpl.CartHandler;
 import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import handler.MainMenuHandler;
+import handler.MenuHandler;
 import menu.Menu;
 import order.Order;
 import order.OrderHandler;
@@ -21,8 +22,8 @@ public class Kiosk {
     private final Order order;
 
     private final MainMenuHandler mainMenuHandler;
-    private final BurgerMenuHandler burgerMenuHandler;
-    private final BeverageMenuHandler beverageMenuHandler;
+    private final MenuHandler burgerMenuHandler;
+    private final MenuHandler beverageMenuHandler;
     private final CartHandler cartHandler;
     private final OrderHandler orderHandler;
 
