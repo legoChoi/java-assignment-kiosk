@@ -25,9 +25,7 @@ public class BeverageMenuHandler {
         List<MenuItem> burgerList = beverageMenuImpl.getList();
         int index = 1;
 
-
-        // 스트림안에서 인덱스를 사용하기위해 AtomicInteger 사용
-        view.append("\n[ BURGERS MENU ]\n");
+        view.append("\n[ DRINK MENU ]\n");
 
         for (MenuItem item : burgerList) {
             view.append(String.format("%d. %-15s| W %.1f | %s\n",

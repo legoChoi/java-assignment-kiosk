@@ -21,7 +21,8 @@ public class CartImpl implements Cart {
      * getter
      * @return sumPrice 장바구니 내 상품의 총 금액
      */
-    private double getSumPrice() {
+    @Override
+    public double getSumPrice() {
         return sumPrice;
     }
 

@@ -23,15 +23,13 @@ public class BurgerMenuHandler {
     private String buildView() {
         StringBuilder view = new StringBuilder();
         List<MenuItem> burgerList = burgerMenuImpl.getList();
-        int index = 1;
+        int idx = 1;
 
-
-        // 스트림안에서 인덱스를 사용하기위해 AtomicInteger 사용
         view.append("\n[ BURGERS MENU ]\n");
 
         for (MenuItem item : burgerList) {
             view.append(String.format("%d. %-15s| W %.1f | %s\n",
-                    index++,
+                    idx++,
                     item.getName(),
                     item.getPrice(),
                     item.getDescription()));

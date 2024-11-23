@@ -1,11 +1,11 @@
 import cart.Cart;
+import cart.CartHandler;
 import cart.CartImpl;
 import handler.BeverageMenuHandler;
 import handler.BurgerMenuHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
 import handler.MainMenuHandler;
-import menuItem.BurgerMenuItemImpl;
 import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
 import shared.io.input.Input;
@@ -19,7 +19,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Input consoleInputImpl = new ConsoleInputImpl(scanner);
-        Output consoleOutputImpl = new ConsoleOutputImpl();
 
         Cart cart = new CartImpl();
 
@@ -32,8 +31,7 @@ public class Main {
                 new OrderImpl(),
 
                 new MainMenuHandler(
-                        consoleInputImpl,
-                        consoleOutputImpl
+                        consoleInputImpl
                 ),
                 new BurgerMenuHandler(
                         consoleInputImpl,
@@ -43,6 +41,10 @@ public class Main {
                 new BeverageMenuHandler(
                         consoleInputImpl,
                         new BeverageMenuImpl(),
+                        cart
+                ),
+                new CartHandler(
+                        consoleInputImpl,
                         cart
                 )
         ).real();
