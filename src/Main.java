@@ -1,11 +1,9 @@
 import cartImpl.Cart;
 import cartImpl.CartHandler;
 import cartImpl.CartImpl;
-import handler.BeverageMenuHandler;
-import handler.BurgerMenuHandler;
+import handler.*;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
-import handler.MainMenuHandler;
 import order.Order;
 import order.OrderHandler;
 import order.OrderImpl;
@@ -28,12 +26,12 @@ public class Main {
                 new MainMenuHandler(
                         consoleInputImpl
                 ),
-                new BurgerMenuHandler(
+                new MenuHandlerImpl(
                         consoleInputImpl,
                         new BurgerMenuImpl(),
                         cartImpl
                 ),
-                new BeverageMenuHandler(
+                new MenuHandlerImpl(
                         consoleInputImpl,
                         new BeverageMenuImpl(),
                         cartImpl
