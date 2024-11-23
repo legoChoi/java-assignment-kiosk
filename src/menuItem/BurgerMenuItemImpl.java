@@ -25,4 +25,11 @@ public class BurgerMenuItemImpl implements MenuItem {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "%s | W %.1f | %s",
+                getName(), getPrice(), getDescription());
+    }
 }

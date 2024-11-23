@@ -10,4 +10,5 @@ public interface Cart {
     void clearCartList();
     String show();
     List<MenuItem> getCartList();
+    void addMenuToCart(MenuItem menuItem);
 }
