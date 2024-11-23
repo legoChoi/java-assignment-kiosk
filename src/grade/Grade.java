@@ -3,7 +3,6 @@ package grade;
 import shared.exceptions.exceptions.NotValidInputException;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 public enum Grade {
     MEDAL_OF_HONOR(1, "국가 유공자", 10),
@@ -41,7 +40,7 @@ public enum Grade {
     }
 
     public static int getLength() {
-        return Arrays.stream(values()).toList().size();
+        return values().length;
     }
 
     public static int getDiscountRatio(int commandInput) {

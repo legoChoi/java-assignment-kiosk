@@ -1,35 +1,20 @@
 package menuItem;
 
-public class BurgerMenuItemImpl implements MenuItem {
-    private final String name;
-    private final double price;
-    private final String description;
+public record BurgerMenuItemImpl(String name, double price, String description) implements MenuItem, Cloneable {
 
-    public BurgerMenuItemImpl(String name, double price, String description) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public double getPrice() {
-        return price;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
+    public BurgerMenuItemImpl(BurgerMenuItemImpl original) {
+        this(original.name, original.price, original.description);
     }
 
     @Override
     public String toString() {
         return String.format(
                 "%s | W %.1f | %s",
-                getName(), getPrice(), getDescription());
+                name(), price(), description());
+    }
+
+    @Override
+    public MenuItem clone() throws CloneNotSupportedException {
+        return (MenuItem) super.clone();
     }
 }

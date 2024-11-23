@@ -2,6 +2,7 @@ package handler;
 
 import cartImpl.Cart;
 import menu.Menu;
+import menuItem.BeverageMenuItemImpl;
 import menuItem.MenuItem;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
@@ -29,9 +30,9 @@ public class BeverageMenuHandler implements MenuHandler {
         for (MenuItem item : burgerList) {
             view.append(String.format("%d. %-15s| W %.1f | %s\n",
                     index++,
-                    item.getName(),
-                    item.getPrice(),
-                    item.getDescription()));
+                    item.name(),
+                    item.price(),
+                    item.description()));
         }
         view.append("0. 뒤로가기");
 
@@ -61,8 +62,8 @@ public class BeverageMenuHandler implements MenuHandler {
                 response = validateCommandInput(1, 2);
 
                 if (response == 1) {
-                    cartImpl.addToCart(menu);
-                    System.out.println(menu.getName() + "가 장바구니에 추가되었습니다.");
+                    cartImpl.addToCart(new BeverageMenuItemImpl(menu.name(), menu.price(), menu.description())); // 복사 생성자를 통한 객체 복사
+                    System.out.println(menu.name() + "가 장바구니에 추가되었습니다.");
                     break;
                 }
 
