@@ -9,12 +9,12 @@ import shared.io.input.Input;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class MenuHandlerImpl extends BaseHandler {
+public class MenuHandler extends BaseHandler {
 
     private final Menu menuImpl;
     private final Cart cartImpl;
 
-    public MenuHandlerImpl(Input consoleInputImpl, Menu menuImpl, Cart cartImpl) {
+    public MenuHandler(Input consoleInputImpl, Menu menuImpl, Cart cartImpl) {
         super(consoleInputImpl);
 
         this.menuImpl = menuImpl;

@@ -13,15 +13,6 @@ public class CartImpl implements Cart {
         this.cartList = new ArrayList<>();
     }
 
-    /** 장바구니 내 상품 금액의 총합
-     * getter
-     * @return sumPrice 장바구니 내 상품의 총 금액
-     */
-    @Override
-    public double getSumPrice() {
-        return sumPrice;
-    }
-
     /**
      * setter 장바구니 내 상품 금액의 총합에 새로 등록되는 상품의 금액 추가
      * @param sumPrice 장바구니에 추가되는 상품
@@ -30,31 +21,25 @@ public class CartImpl implements Cart {
         this.sumPrice += sumPrice;
     }
 
-    /**
-     * 삭제 시에 호출되는 메소드.
-     * 인자로 들어오는 리스트로 바꾼다.
-     * @param cartList 새로 넣을 리스트
-     */
+    @Override
+    public double getSumPrice() {
+        return sumPrice;
+    }
+
+
     @Override
     public void setCartList(List<MenuItem> cartList) {
         this.cartList.clear();
         this.cartList.addAll(cartList);
     }
 
-    /**
-     * 장바구니에 메뉴를 추가하는 메소드.
-     * @param menuItem 장바구니에 추가 할 MenuItem 객체
-     */
+
     @Override
     public void addToCart(MenuItem menuItem) {
         this.cartList.add(menuItem);
         setSumPrice(menuItem.price());
     }
 
-    /**
-     * 장바구니에 동일한 메뉴가 있을 수 있으므로 주소값 비교하여 삭제
-     * @param menuItem 삭제 할 메뉴
-     */
     @Override
     public void removeFromCart(MenuItem menuItem) {
         setSumPrice(-menuItem.price());
@@ -65,9 +50,6 @@ public class CartImpl implements Cart {
                 .toList());
     }
 
-    /**
-     * 주문 시 호출되는 장바구니 초기화
-     */
     @Override
     public void initCartList() {
         this.cartList.clear();
