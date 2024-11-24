@@ -1,4 +1,4 @@
-package menuHandler;
+package handler;
 
 import cartImpl.Cart;
 import menu.Menu;
@@ -7,16 +7,17 @@ import menuItem.MenuItem;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 import java.util.List;
+import java.util.stream.IntStream;
 
-public class MenuHandlerImpl implements MenuHandler {
+public class MenuHandlerImpl extends BaseHandler {
 
-    private final Input consoleInputImpl;
-    private final Menu MenuImpl;
+    private final Menu menuImpl;
     private final Cart cartImpl;
 
     public MenuHandlerImpl(Input consoleInputImpl, Menu menuImpl, Cart cartImpl) {
-        this.consoleInputImpl = consoleInputImpl;
-        this.MenuImpl = menuImpl;
+        super(consoleInputImpl);
+
+        this.menuImpl = menuImpl;
         this.cartImpl = cartImpl;
     }
 
@@ -26,37 +27,21 @@ public class MenuHandlerImpl implements MenuHandler {
      */
     private String buildView() {
         StringBuilder view = new StringBuilder();
-        List<MenuItem> burgerList = MenuImpl.getList();
-        int idx = 1;
+        List<MenuItem> burgerList = menuImpl.getList();
 
-        view.append("\n[ ").append(this.MenuImpl.getTitle()).append(" ]\n");
+        view.append("\n[ ").append(this.menuImpl.getTitle()).append(" ]\n");
 
-        for (MenuItem item : burgerList) {
-            view.append(String.format("%d. %-15s| W %.1f | %s\n",
-                    idx++,
-                    item.name(),
-                    item.price(),
-                    item.description()));
-        }
+        IntStream.range(0, burgerList.size())
+                .forEach(idx -> {
+                    MenuItem menu = burgerList.get(idx);
+                    view.append(String.format(
+                            "%d. %-15s| W %.1f | %s\n",
+                            idx + 1, menu.name(), menu.price(), menu.description()));
+                });
+
         view.append("0. 뒤로가기");
 
         return view.toString();
-    }
-
-    /**
-     * 정수 입력 값 검증
-     * @param min 입력 가능한 최솟값
-     * @param max 입력 가능한 최댓값
-     * @return 검증된 입력값
-     */
-    private int validateCommandInput(int min, int max) {
-        int response = consoleInputImpl.getIntInput();
-
-        if (response < min || response > max) {
-            throw new NotValidInputException();
-        }
-
-        return response;
     }
 
     /**
@@ -92,20 +77,19 @@ public class MenuHandlerImpl implements MenuHandler {
         }
     }
 
-    @Override
     public void run() {
         int response;
 
         while (true) {
             try {
                 System.out.println(buildView());
-                response = validateCommandInput(0, MenuImpl.getList().size());
+                response = validateCommandInput(0, menuImpl.getList().size());
 
                 if (response == 0) {
                     break;
                 }
                 if (response != -1) {
-                    addMenuToCart(MenuImpl.getList().get(response - 1));
+                    addMenuToCart(menuImpl.getList().get(response - 1));
                 }
             } catch (NotValidInputException e) {
                 System.out.println(e.getMessage());

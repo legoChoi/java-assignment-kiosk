@@ -1,39 +1,23 @@
-package order;
+package handler;
 
-import cartImpl.Cart;
 import menuItem.MenuItem;
+import order.Order;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.exceptions.exceptions.OrderListEmptyException;
 import shared.io.input.Input;
 
 import java.util.List;
 
-public class OrderHandler {
+public class OrderHandler extends BaseHandler {
 
     private final Input consoleInputImpl;
-    private final Cart cart;
     private final Order orderImpl;
 
-    public OrderHandler(Input consoleInput, Cart cart, Order order) {
+    public OrderHandler(Input consoleInput, Order order) {
+        super(consoleInput);
+
         this.consoleInputImpl = consoleInput;
-        this.cart = cart;
         this.orderImpl = order;
-    }
-
-    /**
-     * 정수 입력 값 검증
-     * @param min 입력 가능한 최솟값
-     * @param max 입력 가능한 최댓값
-     * @return 검증된 입력값
-     */
-    private int validateCommandInput(int min, int max) {
-        int response = consoleInputImpl.getIntInput();
-
-        if (response < min || response > max) {
-            throw new NotValidInputException();
-        }
-
-        return response;
     }
 
     /**
@@ -56,15 +40,13 @@ public class OrderHandler {
         for (List<MenuItem> order : orderList) {
             view.append(String.format("%d.", orderIndex++));
 
-            for (MenuItem menu : order) {
+            order.forEach(menu -> {
                 view.append("\n");
                 view.append(menu.toString());
-            }
+            });
 
             view.append("\n[Total]");
-            view.append(String.format(
-                    "\nW %.1f\n\n",
-                    priceList.get(pos++)
+            view.append(String.format("\nW %.1f\n\n", priceList.get(pos++)
             ));
         }
 
