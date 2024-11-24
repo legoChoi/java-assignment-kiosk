@@ -18,6 +18,16 @@ public class OrderImpl implements Order {
     }
 
     @Override
+    public double addCartToOrderList(List<MenuItem> menuList, double originalPrice, int ratio) {
+        this.orderList.add(List.copyOf(menuList));
+
+        double price = originalPrice * (1 - ratio / 100.0);
+        this.priceList.add(price);
+
+        return price;
+    }
+
+    @Override
     public List<List<MenuItem>> getOrderList() {
         return this.orderList;
     }
@@ -32,30 +42,9 @@ public class OrderImpl implements Order {
         return this.orderList.size();
     }
 
-    /**
-     * 장바구니에 등록된 메뉴 리스트를 주문 리스트로 옮김
-     * @param menuList 장바구니 메뉴 리스트
-     * @param originalPrice 할인 전 가격
-     * @param ratio 할인율
-     * @return 할인 적용된 가격
-     */
     @Override
-    public double addCartToOrderList(List<MenuItem> menuList, double originalPrice, int ratio) {
-        this.orderList.add(List.copyOf(menuList));
-
-        double price = originalPrice * (1 - ratio / 100.0);
-        this.priceList.add(price);
-
-        return price;
-    }
-
-    /**
-     * 인덱스에 맞는 주문 & 가격 삭제
-     * @param commandInput
-     */
-    @Override
-    public void remove(int commandInput) {
-        orderList.remove(commandInput);
-        priceList.remove(commandInput);
+    public void remove(int idx) {
+        orderList.remove(idx);
+        priceList.remove(idx);
     }
 }

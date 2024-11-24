@@ -27,12 +27,12 @@ public class Main {
                 new KioskHandler(
                         consoleInputImpl
                 ),
-                new MenuHandlerImpl(
+                new MenuHandler(
                         consoleInputImpl,
                         new BurgerMenuImpl(),
                         cartImpl
                 ),
-                new MenuHandlerImpl(
+                new MenuHandler(
                         consoleInputImpl,
                         new BeverageMenuImpl(),
                         cartImpl

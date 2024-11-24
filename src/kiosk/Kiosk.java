@@ -2,18 +2,18 @@ package kiosk;
 
 import handler.CartHandler;
 import handler.KioskHandler;
-import handler.MenuHandlerImpl;
+import handler.MenuHandler;
 import handler.OrderHandler;
 
 public class Kiosk {
 
     private final KioskHandler kioskHandler;
-    private final MenuHandlerImpl burgerMenuHandler;
-    private final MenuHandlerImpl beverageMenuHandler;
+    private final MenuHandler burgerMenuHandler;
+    private final MenuHandler beverageMenuHandler;
     private final CartHandler cartHandler;
     private final OrderHandler orderHandler;
 
-    public Kiosk(KioskHandler mainMenuHandler, MenuHandlerImpl burgerMenuHandler, MenuHandlerImpl beverageMenuHandler, CartHandler cartHandler, OrderHandler orderHandler) {
+    public Kiosk(KioskHandler mainMenuHandler, MenuHandler burgerMenuHandler, MenuHandler beverageMenuHandler, CartHandler cartHandler, OrderHandler orderHandler) {
         this.kioskHandler = mainMenuHandler;
         this.burgerMenuHandler = burgerMenuHandler;
         this.beverageMenuHandler = beverageMenuHandler;
