@@ -1,4 +1,4 @@
-package handler;
+package menuHandler;
 
 import cartImpl.Cart;
 import menu.Menu;
@@ -93,7 +93,7 @@ public class MenuHandlerImpl implements MenuHandler {
     }
 
     @Override
-    public void showMenu() {
+    public void run() {
         int response;
 
         while (true) {

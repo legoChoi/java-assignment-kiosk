@@ -6,6 +6,8 @@ import order.Order;
 import shared.exceptions.exceptions.CartEmptyException;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class CartHandler {
@@ -72,7 +74,78 @@ public class CartHandler {
         return view.toString();
     }
 
-    public void showMenu() {
+    /**
+     * 장바구니에 있는 메뉴 리스트를 주문 리스트에 삽입하는 메소드
+     */
+    private void makeOrderFromCart() {
+        int response;
+        int ratio;
+        double price;
+
+        while (true) {
+            System.out.println(buildGradeListView());
+            try {
+                response = validateCommandInput(1, Grade.getLength());
+                ratio = Grade.getDiscountRatio(response);
+                price = orderImpl.addCartToOrderList(cartImpl.getCartList(), cartImpl.getSumPrice(), ratio);
+                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n", price);
+
+                cartImpl.initCartList();
+                break;
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            }
+        }
+    }
+
+    /**
+     * 할인 등급 리스트를 문자열로 반환하는 메소드
+     */
+    private String buildGradeListView() {
+        StringBuilder view = new StringBuilder();
+        view.append("\n할인 정보를 입력해주세요.");
+
+        Arrays.stream(Grade.values()).forEach(grade ->
+                view.append(String.format(
+                        "\n%d. %-13s : %d%%",
+                        grade.getIndex(),
+                        grade.getName(),
+                        grade.getRatio()
+                )));
+
+        return view.toString();
+    }
+
+    /**
+     * 장바구니에서 특정 메뉴 삭제 메소드
+     */
+    private void deleteMenuFromCart() {
+        int response;
+
+        while (true) {
+            System.out.println("\n삭제 할 메뉴를 선택 해주세요.");
+            System.out.println("0. 취소");
+
+            try {
+                response = validateCommandInput(0, cartImpl.getCartList().size());
+
+                if (response == 0) {
+                    break;
+                }
+
+                cartImpl.removeFromCart(
+                        cartImpl.getCartList().get(response -1)
+                );
+                break;
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            }
+        }
+    }
+
+    public void run() {
         int response;
 
         while (true) {
@@ -103,56 +176,4 @@ public class CartHandler {
         }
     }
 
-    /**
-     * 장바구니에 있는 메뉴 리스트를 주문 리스트에 삽입하는 메소드
-     */
-    private void makeOrderFromCart() {
-        int response;
-        int ratio;
-        double price;
-
-        while (true) {
-            System.out.println(Grade.getGradeListView());
-            try {
-                response = validateCommandInput(1, Grade.getLength());
-                ratio = Grade.getDiscountRatio(response);
-                price = orderImpl.addCartToOrderList(cartImpl.getCartList(), cartImpl.getSumPrice(), ratio);
-                System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.%n", price);
-
-                cartImpl.initCartList();
-                break;
-            } catch (NotValidInputException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-            }
-        }
-    }
-
-    /**
-     * 장바구니에서 특정 메뉴 삭제 메소드
-     */
-    private void deleteMenuFromCart() {
-        int response;
-
-        while (true) {
-            System.out.println("\n삭제 할 메뉴를 선택 해주세요.");
-            System.out.println("0. 취소");
-
-            try {
-                response = validateCommandInput(0, cartImpl.getCartList().size());
-
-                if (response == 0) {
-                    break;
-                }
-
-                cartImpl.removeFromCart(
-                        cartImpl.getCartList().get(response -1)
-                );
-                break;
-            } catch (NotValidInputException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-            }
-        }
-    }
 }

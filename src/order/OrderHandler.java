@@ -74,7 +74,7 @@ public class OrderHandler {
         return view.toString();
     }
 
-    public void showMenu() {
+    public void run() {
         int response;
 
         while (true) {

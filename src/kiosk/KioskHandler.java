@@ -1,17 +1,17 @@
-package handler;
+package kiosk;
 
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 
-public class MainMenuHandler {
+public class KioskHandler {
 
     private final Input consoleInput;
 
-    public MainMenuHandler(Input consoleInput) {
+    public KioskHandler(Input consoleInput) {
         this.consoleInput = consoleInput;
     }
 
-    public int showMenu() {
+    public int run() {
         int response = -1;
 
         System.out.println(buildView());
