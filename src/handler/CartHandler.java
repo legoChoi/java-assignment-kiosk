@@ -1,5 +1,6 @@
-package cartImpl;
+package handler;
 
+import cartImpl.Cart;
 import grade.Grade;
 import menuItem.MenuItem;
 import order.Order;
@@ -9,33 +10,18 @@ import shared.io.input.Input;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
-public class CartHandler {
+public class CartHandler extends BaseHandler {
 
-    private final Input consoleInputImpl;
     private final Cart cartImpl;
     private final Order orderImpl;
 
-    public CartHandler(Input input, Cart cart, Order orderImpl) {
-        this.consoleInputImpl = input;
+    public CartHandler(Input consoleInputImpl, Cart cart, Order orderImpl) {
+        super(consoleInputImpl);
+
         this.cartImpl = cart;
         this.orderImpl = orderImpl;
-    }
-
-    /**
-     * 정수 입력 값 검증
-     * @param min 입력 가능한 최솟값
-     * @param max 입력 가능한 최댓값
-     * @return 검증된 입력값
-     */
-    private int validateCommandInput(int min, int max) {
-        int response = consoleInputImpl.getIntInput();
-
-        if (response < min || response > max) {
-            throw new NotValidInputException();
-        }
-
-        return response;
     }
 
     /**
@@ -50,22 +36,22 @@ public class CartHandler {
         }
 
         StringBuilder view = new StringBuilder();
-        int idx = 1;
 
         view.append("\n[ ORDER MENU ]\n");
 
-        for (MenuItem item : cartList) {
-            view.append(String.format(
-                    "%d. %-15s| W %.1f | %s\n",
-                    idx++,
-                    item.name(),
-                    item.price(),
-                    item.description()));
-        }
+        IntStream.range(0, cartList.size())
+                .forEach(idx -> {
+                    MenuItem menu = cartList.get(idx);
+                    view.append(String.format(
+                            "%d. %-15s| W %.1f | %s\n",
+                            idx + 1,
+                            menu.name(),
+                            menu.price(),
+                            menu.description()));
+                });
 
         view.append("\n[ Total ]\n");
         view.append(String.format("W %.1f\n", cartImpl.getSumPrice()));
-
         view.append(String.format(
                 "\n1. %-10s 2. %-10s 3. %s",
                 "주문", "삭제", "메뉴판"
