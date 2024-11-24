@@ -22,27 +22,6 @@ public enum Grade {
         this.ratio = ratio;
     }
 
-    public static String getGradeListView() {
-        StringBuilder result = new StringBuilder();
-
-        result.append("\n할인 정보를 입력해주세요.");
-
-        Arrays.stream(values()).forEach(grade -> {
-            result.append(String.format(
-                    "\n%d. %-13s : %d%%",
-                    grade.index,
-                    grade.name,
-                    grade.ratio
-            ));
-        });
-
-        return result.toString();
-    }
-
-    public static int getLength() {
-        return values().length;
-    }
-
     public static int getDiscountRatio(int commandInput) {
         return Arrays.stream(values())
                 .filter(e -> e.index == commandInput)
@@ -51,7 +30,19 @@ public enum Grade {
                 .orElseThrow(NotValidInputException::new);
     }
 
-    private int getRatio() {
+    public int getIndex() {
+        return index;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getRatio() {
         return this.ratio;
+    }
+
+    public static int getLength() {
+        return values().length;
     }
 }

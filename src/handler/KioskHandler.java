@@ -3,26 +3,25 @@ package handler;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 
-public class MainMenuHandler {
+public class KioskHandler extends BaseHandler {
 
-    private final Input consoleInput;
-
-    public MainMenuHandler(Input consoleInput) {
-        this.consoleInput = consoleInput;
+    public KioskHandler(Input consoleInput) {
+        super(consoleInput);
     }
 
-    public int showMenu() {
+    public int run() {
         int response = -1;
 
         System.out.println(buildView());
 
         try {
-            response = consoleInput.getIntInput();
+            response = consoleInputImpl.getIntInput();
 
             return response;
         } catch (NotValidInputException e) {
             System.out.println(e.getMessage());
-            consoleInput.getStringInput();
+            consoleInputImpl.getStringInput();
+
             return response;
         }
     }

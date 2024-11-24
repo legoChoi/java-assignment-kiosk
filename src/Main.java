@@ -1,11 +1,12 @@
 import cartImpl.Cart;
-import cartImpl.CartHandler;
+import handler.CartHandler;
 import cartImpl.CartImpl;
 import handler.*;
+import handler.KioskHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
 import order.Order;
-import order.OrderHandler;
+import handler.OrderHandler;
 import order.OrderImpl;
 import shared.io.input.ConsoleInputImpl;
 import shared.io.input.Input;
@@ -23,15 +24,15 @@ public class Main {
         Order orderImpl = new OrderImpl();
 
         new Kiosk(
-                new MainMenuHandler(
+                new KioskHandler(
                         consoleInputImpl
                 ),
-                new MenuHandlerImpl(
+                new MenuHandler(
                         consoleInputImpl,
                         new BurgerMenuImpl(),
                         cartImpl
                 ),
-                new MenuHandlerImpl(
+                new MenuHandler(
                         consoleInputImpl,
                         new BeverageMenuImpl(),
                         cartImpl
@@ -43,7 +44,6 @@ public class Main {
                 ),
                 new OrderHandler(
                         consoleInputImpl,
-                        cartImpl,
                         orderImpl
                 )
         ).start();
