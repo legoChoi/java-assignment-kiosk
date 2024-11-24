@@ -1,7 +1,8 @@
 import cartImpl.Cart;
 import cartImpl.CartHandler;
 import cartImpl.CartImpl;
-import handler.*;
+import menuHandler.*;
+import kiosk.KioskHandler;
 import menu.BeverageMenuImpl;
 import menu.BurgerMenuImpl;
 import order.Order;
@@ -23,7 +24,7 @@ public class Main {
         Order orderImpl = new OrderImpl();
 
         new Kiosk(
-                new MainMenuHandler(
+                new KioskHandler(
                         consoleInputImpl
                 ),
                 new MenuHandlerImpl(

@@ -1,14 +1,6 @@
 package menuItem;
 
-public record BurgerMenuItemImpl(String name, double price, String description) implements MenuItem, Cloneable {
-
-    /**
-     * 복사 생성자
-     * @param original 복사 대상
-     */
-    public BurgerMenuItemImpl(BurgerMenuItemImpl original) {
-        this(original.name, original.price, original.description);
-    }
+public record BurgerMenuItemImpl(String name, double price, String description) implements MenuItem {
 
     @Override
     public String toString() {
