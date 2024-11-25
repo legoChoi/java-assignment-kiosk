@@ -1,6 +1,6 @@
 package handler;
 
-import cartImpl.Cart;
+import cart.Cart;
 import menu.Menu;
 import menuItem.BurgerMenuItemImpl;
 import menuItem.MenuItem;
