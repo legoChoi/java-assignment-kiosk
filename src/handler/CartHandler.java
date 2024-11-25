@@ -12,16 +12,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class CartHandler extends BaseHandler {
+public class CartHandler implements Handler {
 
+    private final Input consoleInputImpl;
     private final Cart cartImpl;
     private final Order orderImpl;
 
     public CartHandler(Input consoleInputImpl, Cart cart, Order orderImpl) {
-        super(consoleInputImpl);
-
+        this.consoleInputImpl = consoleInputImpl;
         this.cartImpl = cart;
         this.orderImpl = orderImpl;
+    }
+
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     * @throws NotValidInputException
+     */
+    private int validateCommandInput(int min, int max) {
+        int response = consoleInputImpl.getIntInput();
+
+        if (response < min || response > max) {
+            throw new NotValidInputException();
+        }
+
+        return response;
     }
 
     /**
@@ -131,7 +148,8 @@ public class CartHandler extends BaseHandler {
         }
     }
 
-    public void run() {
+    @Override
+    public int run() {
         int response;
 
         while (true) {
@@ -160,6 +178,8 @@ public class CartHandler extends BaseHandler {
                 break;
             }
         }
+
+        return -1;
     }
 
 }

@@ -19,7 +19,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         Input consoleInputImpl = new ConsoleInputImpl(scanner);
-
         Cart cartImpl = new CartImpl();
         Order orderImpl = new OrderImpl();
 

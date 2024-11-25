@@ -1,19 +1,17 @@
 package kiosk;
 
-import handler.CartHandler;
-import handler.KioskHandler;
-import handler.MenuHandler;
-import handler.OrderHandler;
 
-public class Kiosk {
+import handler.Handler;
 
-    private final KioskHandler kioskHandler;
-    private final MenuHandler burgerMenuHandler;
-    private final MenuHandler beverageMenuHandler;
-    private final CartHandler cartHandler;
-    private final OrderHandler orderHandler;
+public class Kiosk implements Machine {
 
-    public Kiosk(KioskHandler mainMenuHandler, MenuHandler burgerMenuHandler, MenuHandler beverageMenuHandler, CartHandler cartHandler, OrderHandler orderHandler) {
+    private final Handler kioskHandler;
+    private final Handler burgerMenuHandler;
+    private final Handler beverageMenuHandler;
+    private final Handler cartHandler;
+    private final Handler orderHandler;
+
+    public Kiosk(Handler mainMenuHandler, Handler burgerMenuHandler, Handler beverageMenuHandler, Handler cartHandler, Handler orderHandler) {
         this.kioskHandler = mainMenuHandler;
         this.burgerMenuHandler = burgerMenuHandler;
         this.beverageMenuHandler = beverageMenuHandler;
@@ -21,6 +19,7 @@ public class Kiosk {
         this.orderHandler = orderHandler;
     }
 
+    @Override
     public void start() {
         int response;
 

@@ -3,12 +3,15 @@ package handler;
 import shared.exceptions.exceptions.NotValidInputException;
 import shared.io.input.Input;
 
-public class KioskHandler extends BaseHandler {
+public class KioskHandler implements Handler {
+
+    private final Input consoleInputImpl;
 
     public KioskHandler(Input consoleInput) {
-        super(consoleInput);
+        this.consoleInputImpl = consoleInput;
     }
 
+    @Override
     public int run() {
         int response = -1;
 
