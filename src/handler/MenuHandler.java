@@ -9,16 +9,33 @@ import shared.io.input.Input;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class MenuHandler extends BaseHandler {
+public class MenuHandler implements Handler {
 
+    private final Input consoleInputImpl;
     private final Menu menuImpl;
     private final Cart cartImpl;
 
     public MenuHandler(Input consoleInputImpl, Menu menuImpl, Cart cartImpl) {
-        super(consoleInputImpl);
-
+        this.consoleInputImpl = consoleInputImpl;
         this.menuImpl = menuImpl;
         this.cartImpl = cartImpl;
+    }
+
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     * @throws NotValidInputException
+     */
+    private int validateCommandInput(int min, int max) {
+        int response = consoleInputImpl.getIntInput();
+
+        if (response < min || response > max) {
+            throw new NotValidInputException();
+        }
+
+        return response;
     }
 
     /**
@@ -77,7 +94,8 @@ public class MenuHandler extends BaseHandler {
         }
     }
 
-    public void run() {
+    @Override
+    public int run() {
         int response;
 
         while (true) {
@@ -96,5 +114,7 @@ public class MenuHandler extends BaseHandler {
                 consoleInputImpl.getStringInput();
             }
         }
+
+        return -1;
     }
 }

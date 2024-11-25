@@ -8,16 +8,31 @@ import shared.io.input.Input;
 
 import java.util.List;
 
-public class OrderHandler extends BaseHandler {
+public class OrderHandler implements Handler {
 
     private final Input consoleInputImpl;
     private final Order orderImpl;
 
     public OrderHandler(Input consoleInput, Order order) {
-        super(consoleInput);
-
         this.consoleInputImpl = consoleInput;
         this.orderImpl = order;
+    }
+
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     * @throws NotValidInputException
+     */
+    private int validateCommandInput(int min, int max) {
+        int response = consoleInputImpl.getIntInput();
+
+        if (response < min || response > max) {
+            throw new NotValidInputException();
+        }
+
+        return response;
     }
 
     /**
@@ -56,7 +71,8 @@ public class OrderHandler extends BaseHandler {
         return view.toString();
     }
 
-    public void run() {
+    @Override
+    public int run() {
         int response;
 
         while (true) {
@@ -79,5 +95,7 @@ public class OrderHandler extends BaseHandler {
                 break;
             }
         }
+
+        return -1;
     }
 }
