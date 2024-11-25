@@ -20,7 +20,7 @@
 
 ---
 ## 클래스 다이어그램
-![키오스크 클래스 다이어그램](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlB3z5%2FbtsKUBALdQw%2Fw0952RBu3ZkP0nu5kuQj5K%2Fimg.png)
+![키오스크 클래스 다이어그램](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbo5gkJ%2FbtsKTqN3Hay%2FpaYqe2MNvoaQmOpmCp4UKk%2Fimg.png)
 
 ## 폴더 구조
 ![키오스크 폴더 구조](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FD47Pr%2FbtsKVyjgifD%2F2uIRTAPVLwLhPuMXCTYfd1%2Fimg.png)
