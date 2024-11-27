@@ -21,21 +21,28 @@ public class MenuHandler implements Handler {
         this.cartImpl = cartImpl;
     }
 
-    /**
-     * 정수 입력 값 검증
-     * @param min 입력 가능한 최솟값
-     * @param max 입력 가능한 최댓값
-     * @return 검증된 입력값
-     * @throws NotValidInputException
-     */
-    private int validateCommandInput(int min, int max) {
-        int response = consoleInputImpl.getIntInput();
+    @Override
+    public int run() {
+        int response;
 
-        if (response < min || response > max) {
-            throw new NotValidInputException();
+        while (true) {
+            try {
+                System.out.println(buildView());
+                response = validateCommandInput(0, menuImpl.getList().size());
+
+                if (response == 0) {
+                    break;
+                }
+                if (response != -1) {
+                    addMenuToCart(menuImpl.getList().get(response - 1));
+                }
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            }
         }
 
-        return response;
+        return -1;
     }
 
     /**
@@ -59,6 +66,23 @@ public class MenuHandler implements Handler {
         view.append("0. 뒤로가기");
 
         return view.toString();
+    }
+
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     * @throws NotValidInputException
+     */
+    private int validateCommandInput(int min, int max) {
+        int response = consoleInputImpl.getIntInput();
+
+        if (response < min || response > max) {
+            throw new NotValidInputException();
+        }
+
+        return response;
     }
 
     /**
@@ -92,29 +116,5 @@ public class MenuHandler implements Handler {
                 consoleInputImpl.getStringInput();
             }
         }
-    }
-
-    @Override
-    public int run() {
-        int response;
-
-        while (true) {
-            try {
-                System.out.println(buildView());
-                response = validateCommandInput(0, menuImpl.getList().size());
-
-                if (response == 0) {
-                    break;
-                }
-                if (response != -1) {
-                    addMenuToCart(menuImpl.getList().get(response - 1));
-                }
-            } catch (NotValidInputException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-            }
-        }
-
-        return -1;
     }
 }
