@@ -18,21 +18,32 @@ public class OrderHandler implements Handler {
         this.orderImpl = order;
     }
 
-    /**
-     * 정수 입력 값 검증
-     * @param min 입력 가능한 최솟값
-     * @param max 입력 가능한 최댓값
-     * @return 검증된 입력값
-     * @throws NotValidInputException
-     */
-    private int validateCommandInput(int min, int max) {
-        int response = consoleInputImpl.getIntInput();
+    @Override
+    public int run() {
+        int response;
 
-        if (response < min || response > max) {
-            throw new NotValidInputException();
+        while (true) {
+            try {
+                System.out.println(buildView());
+                response = validateCommandInput(0, orderImpl.getOrderList().size());
+
+                if (response == 0) {
+                    break;
+                }
+
+                orderImpl.remove(response - 1);
+                break;
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            } catch (OrderListEmptyException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+                break;
+            }
         }
 
-        return response;
+        return -1;
     }
 
     /**
@@ -71,31 +82,20 @@ public class OrderHandler implements Handler {
         return view.toString();
     }
 
-    @Override
-    public int run() {
-        int response;
+    /**
+     * 정수 입력 값 검증
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     * @return 검증된 입력값
+     * @throws NotValidInputException
+     */
+    private int validateCommandInput(int min, int max) {
+        int response = consoleInputImpl.getIntInput();
 
-        while (true) {
-            try {
-                System.out.println(buildView());
-                response = validateCommandInput(0, orderImpl.getOrderList().size());
-
-                if (response == 0) {
-                    break;
-                }
-
-                orderImpl.remove(response - 1);
-                break;
-            } catch (NotValidInputException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-            } catch (OrderListEmptyException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-                break;
-            }
+        if (response < min || response > max) {
+            throw new NotValidInputException();
         }
 
-        return -1;
+        return response;
     }
 }
