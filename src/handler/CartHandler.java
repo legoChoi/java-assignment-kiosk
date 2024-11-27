@@ -24,6 +24,40 @@ public class CartHandler implements Handler {
         this.orderImpl = orderImpl;
     }
 
+    @Override
+    public int run() {
+        int response;
+
+        while (true) {
+            try {
+                System.out.println(buildView());
+                response = validateCommandInput(1, 3);
+
+                if (response == 1) {
+                    makeOrderFromCart();
+                    break;
+                }
+
+                if (response == 2) {
+                    deleteMenuFromCart();
+                }
+
+                if (response == 3) {
+                    break;
+                }
+            } catch (NotValidInputException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+            } catch (CartEmptyException e) {
+                System.out.println(e.getMessage());
+                consoleInputImpl.getStringInput();
+                break;
+            }
+        }
+
+        return -1;
+    }
+
     /**
      * 정수 입력 값 검증
      * @param min 입력 가능한 최솟값
@@ -147,39 +181,4 @@ public class CartHandler implements Handler {
             }
         }
     }
-
-    @Override
-    public int run() {
-        int response;
-
-        while (true) {
-            try {
-                System.out.println(buildView());
-                response = validateCommandInput(1, 3);
-
-                if (response == 1) {
-                    makeOrderFromCart();
-                    break;
-                }
-
-                if (response == 2) {
-                    deleteMenuFromCart();
-                }
-
-                if (response == 3) {
-                    break;
-                }
-            } catch (NotValidInputException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-            } catch (CartEmptyException e) {
-                System.out.println(e.getMessage());
-                consoleInputImpl.getStringInput();
-                break;
-            }
-        }
-
-        return -1;
-    }
-
 }
